@@ -1,0 +1,13 @@
+# Native peakfinding and grouping settings for the one-beam tutorial.
+peakfinding:
+  snr_threshold: 10.0
+  dm_reach: 8
+  waist_bins: 1
+grouping:
+  halo_size: 2
+  dm_tolerance: 1.5
+  time_tolerance: 1.5
+execution:
+  beam_batch_size: 1
+  timeout_ms: 0
+  timeout_policy: discard

@@ -1,0 +1,16 @@
+# Generated observations and catalogs may live outside the standard output folder.
+outputs/
+*.asdf
+*.log
+
+# Notebook and Python session artifacts.
+.ipynb_checkpoints/
+__pycache__/
+*.py[cod]
+
+# Personal environments and editor settings.
+.venv/
+venv/
+.env
+.vscode/
+.DS_Store

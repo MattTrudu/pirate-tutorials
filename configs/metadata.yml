@@ -1,0 +1,28 @@
+# Native X-engine metadata for one simulated CHORD-like beam.
+version: 2
+
+# Channels have equal widths within each zone, with finer channels at low frequency.
+zone_nfreq: [8192, 8192, 6144, 2048, 3584]
+zone_freq_edges: [300, 350, 450, 600, 800, 1500]  # MHz
+freq_channels: []  # The acquisition contains all channels.
+beamset: 42
+beam_ids: [1]
+beam_positions_x: [0.0]
+beam_positions_y: [0.0]
+
+# 5120 ns x 195 = 0.9984 ms per intensity sample.
+unix_ns_at_seq_0: 1772483060000000000
+dt_ns_per_seq: 5120
+seq_per_frb_time_sample: 195
+noise_variance: 1.0
+
+# Geometry fields required by the native format; retain these example values.
+tel_origin_itrs_lat_deg: 49.32075144444
+tel_origin_itrs_lon_deg: -119.62081125
+tel_grid_x_axis: [0.999974342398359362, -0.000037539331442772, -0.007163318767675494]
+tel_grid_y_axis: [0.000065403387739210, 0.999992433220348809, 0.003889630373557614]
+tel_dish_elev_axis: [0.99999999838132391, -0.000056897733584327, 0.0]
+tel_dish_vert_axis: [0.0, 0.0, 1.0]
+tel_dish_coelev_deg: 0.0
+tel_dish_separation_x_m: 6.300156854906823
+tel_dish_separation_y_m: 8.500057809796308
