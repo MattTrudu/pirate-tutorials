@@ -94,13 +94,15 @@ The output should contain `release 12.6`. Here, `nvcc` is the CUDA compiler
 used to build GPU code.
 
 Install the following package versions. Copy the **whole block**. It runs the
-commands in order and stops if an installation command fails:
+commands in order and stops if an installation command fails. It also installs
+`setuptools` and `wheel`, the build tools needed to install `pipmake`:
 
 ```bash
 bash <<'INSTALL_PACKAGES'
 set -eo pipefail
 source "$HOME/venvs/pirate/bin/activate"
 python -m pip install --no-index --only-binary=:all: "pip==26.2.1"
+python -m pip install --no-index --only-binary=:all: "setuptools>=70.1" wheel
 python -m pip install --no-index --only-binary=:all: \
     "numpy==2.2.2" "cupy==13.3.0" "pybind11==3.1.0" \
     "editables==0.6" "PyYAML==6.0.3" "argcomplete==3.7.2" \
@@ -115,8 +117,9 @@ The last line should be `No broken requirements found.` This checks that the
 Python package requirements agree with each other. It does not test a GPU yet.
 
 Most packages come from the Alliance's collection of prebuilt Python packages;
-`pipmake` is downloaded from PyPI. Keep the exact versions above so everyone
-uses the same direct dependencies. The [reference page](install-fir-reference.md)
+`pipmake` is downloaded from PyPI. Keep the exact version pins above for
+PIRATE's dependencies. The build tools `setuptools` and `wheel` are selected
+from the available Alliance wheels. The [reference page](install-fir-reference.md)
 explains the version choices.
 
 ## 3. Download the source code and GPU development files

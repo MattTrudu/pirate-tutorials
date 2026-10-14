@@ -58,6 +58,15 @@ dependency. Alliance wheel versions may have a `+computecanada` suffix.
 `pipmake` is installed from PyPI because no Alliance wheel was available during
 the recorded installation.
 
+The guide explicitly installs `setuptools>=70.1` and `wheel` before building
+`pipmake` from its source archive. With `--no-build-isolation`, pip expects the
+build tools to be present in the active environment. Older setuptools needs
+the separate `wheel` package to supply `bdist_wheel`; without it, installation
+can fail with `invalid command 'bdist_wheel'`. Setuptools includes that command
+itself starting with [version 70.1.0](https://setuptools.pypa.io/en/stable/history.html#v70-1-0).
+These build tools are selected from the Alliance wheelhouse rather than pinned
+to versions from the original validation record.
+
 ## Why these build and runtime settings are needed
 
 ### Native libraries and CPU compilation
@@ -161,6 +170,7 @@ changing packages. Preserve the source directories and completed build files.
 | --- | --- |
 | Python path is outside `venvs/pirate` | Load the Python module and activate the environment. After student-guide step 4, source `env-fir.sh`. |
 | Pinned Python wheel is unavailable | Use `avail_wheels PACKAGE` to inspect availability; choose and validate a revised version set before changing the course instructions. |
+| Installing `pipmake` fails with `invalid command 'bdist_wheel'` | In the active `pirate` environment, run `python -m pip install --no-index --only-binary=:all: "setuptools>=70.1" wheel`, then retry the `pipmake` command in step 2. |
 | Git destination already exists | Inspect the checkout and local changes. Resume the appropriate stage rather than deleting a working or partial installation. |
 | ASDF patch does not apply | Check the PIRATE commit and its diff. The patch may already be applied, or the source may differ from the pinned version. |
 | `asdf/config.hxx: No such file or directory` | Run the header-generation command before the parallel PIRATE build in student-guide step 7. |
