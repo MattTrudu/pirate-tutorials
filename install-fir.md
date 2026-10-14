@@ -93,7 +93,7 @@ nvcc --version
 The output should contain `release 12.6`. Here, `nvcc` is the CUDA compiler
 used to build GPU code.
 
-Install the following package versions. Copy the **whole block whitin '''bash and '''**. It runs the
+Install the following package versions. Copy the **whole block**. It runs the
 commands in order and stops if an installation command fails:
 
 ```bash
