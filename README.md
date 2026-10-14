@@ -2,7 +2,7 @@
 
 Three short Jupyter notebooks for students learning to use PIRATE on saved
 observations. This repository contains teaching material and native example
-configs. Install PIRATE separately; no changes to its source fork are needed.
+configs. Install PIRATE separately using the [Fir installation guide](install-fir.md).
 
 Each notebook follows **scenario -> config -> terminal command -> read and plot**.
 PIRATE performs the simulation, dedispersion, and candidate extraction. Notebook
@@ -11,16 +11,19 @@ An allocated NVIDIA GPU and a working PIRATE installation are required.
 
 The instructor has reported a successful local walkthrough of the original
 notebooks. This standalone edition was prepared by file editing and static
-inspection only; it has not been rerun. Fir setup and resource requirements
-still need validation. Saved notebook outputs are intentionally cleared.
+inspection only; it has not been rerun. The installation guide is based on a
+separate successful Fir GPU validation. The consolidated installation procedure,
+Jupyter setup, and these notebooks still need a fresh end-to-end run on Fir.
+Saved notebook outputs are intentionally cleared.
 
 ## Start here
 
-1. Follow [Personal setup on Fir](SETUP_FIR.md), or use a personal GPU environment
-   with the required PIRATE version below. The Fir-specific module and native
-   dependency recipe must be completed by the instructor before the course.
-2. Check that the terminal and notebook kernel import the same PIRATE checkout,
-   using the [environment check](SETUP_FIR.md#check-the-selected-python-environment).
+1. Follow the [student installation guide for Fir](install-fir.md), including
+   its GPU validation, or use a personal GPU environment with the required
+   PIRATE version below. Instructors can consult the [technical reference](install-fir-reference.md).
+2. Complete [Notebook setup](#notebook-setup), then check that the terminal and
+   notebook kernel import the same PIRATE checkout using the
+   [environment check](#check-the-selected-python-environment).
 3. Start the terminal and notebooks in this tutorial repository, beside
    `configs/`. Activate your environment in the allocated terminal.
 4. Work through the notebooks in order. Fill in the blank paths before running
@@ -47,10 +50,59 @@ installation with the same package or kernel name is not interchangeable.
 | PIRATE | [MattTrudu/pirate](https://github.com/MattTrudu/pirate) | `c7269d69ae7327bac71793b780f78cc3c2d15cc8` |
 | ksgpu | [kmsmith137/ksgpu](https://github.com/kmsmith137/ksgpu) | `5c81be2dea54226587f80eb206a35ca92c7160c5` |
 
-Initialize PIRATE's submodules at that revision. [SETUP_FIR.md](SETUP_FIR.md)
-contains the checkout and build steps. These pins identify the source snapshot,
-not a claim of a validated Fir build. Students need access to both source
-repositories and must keep their own checkouts and environments.
+The [installation guide](install-fir.md) contains the checkout, submodule,
+ASDF compatibility patch, build, and GPU validation steps for this snapshot.
+Students need access to both source repositories and must keep their own
+checkouts and environments.
+
+## Notebook setup
+
+After completing the installation guide, install the notebook packages and
+register a kernel from the same `pirate` environment on a login node:
+
+```bash
+source "$HOME/opt/pirate/env-fir.sh"
+python -m pip install --no-index --only-binary=:all: \
+    "numpy==2.2.2" "cupy==13.3.0" matplotlib ipykernel
+python -m pip check
+python -m ipykernel install --user --name pirate-tutorial \
+    --display-name "Python (PIRATE tutorial)"
+```
+
+The kernel name is a label; its Python executable belongs to
+`$HOME/venvs/pirate`. Registration does not allocate a GPU or load modules when
+the kernel starts. The instructor must configure the GPU-backed Jupyter session
+to supply the module and library settings from `env-fir.sh` **before starting
+the kernel**. Activating a separate terminal does not change an already
+running kernel. The Jupyter workflow still needs validation on Fir.
+
+In a terminal attached to that GPU allocation, source
+`$HOME/opt/pirate/env-fir.sh`, then change to the folder containing these
+notebooks and `configs/`. Open the notebooks from the same folder and select
+**Python (PIRATE tutorial)**. Save your work and stop the Jupyter session when
+finished.
+
+### Check the selected Python environment
+
+In the activated terminal, run:
+
+```bash
+python -c 'import sys, pirate_frb; print(sys.executable); print(pirate_frb.__file__)'
+```
+
+In a temporary notebook cell, run:
+
+```python
+import sys
+import pirate_frb
+print(sys.executable)
+print(pirate_frb.__file__)
+```
+
+Both must identify your `venvs/pirate` environment and the PIRATE checkout you
+installed. Kernel names alone do not identify an installation. Restart the
+kernel after changing environments. Keep the scheduler's GPU visibility
+settings; do not override `CUDA_VISIBLE_DEVICES`.
 
 ## Paths and output layout
 
